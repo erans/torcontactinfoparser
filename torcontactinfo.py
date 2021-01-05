@@ -145,7 +145,14 @@ class TorContactInfoParser(object):
                 "valid_chars" : "[0-9]+"
             }
         },
-        "cpu" : None,
+        "cpu" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 0,
+                "max_length" : 50,
+                "valid_chars" : "[a-zA-Z0-9_-]+"
+            }
+        },
         "virtualization" : {
             "fn" : _parse_string_value,
             "args" : {
