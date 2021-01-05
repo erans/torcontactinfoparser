@@ -8,7 +8,7 @@ class TorContactInfoParser(object):
                 raise ValueError("value of field '{0}' is too short".format(field_name))
             return None
 
-        if value_length >= max_length:
+        if value_length > max_length:
             if raise_exception:
                 raise ValueError("value of field '{0}' is too long".format(field_name))
             return None
@@ -31,12 +31,28 @@ class TorContactInfoParser(object):
 
     _supported_fields_parsers = {
         "email" : _parse_email_value,
-        "operatorurl" : {
+        "url" : {
             "fn" : _parse_string_value,
             "args" : {
-                "min_length" : 0,
-                "max_length" : 254,
-                "valid_chars" : "[a-zA-Z0-9.-]+"
+                "min_length" : 4,
+                "max_length" : 399,
+                "valid_chars" : "[_%/:a-zA-Z0-9.-]+"
+            }
+        },
+        "proof" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 7,
+                "max_length" : 7,
+                "valid_chars" : "[adinrsu-]+"
+            }
+        },
+        "ciissversion" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 1,
+                "max_length" : 1,
+                "valid_chars" : "[12]+"
             }
         },
         "pgp" : {
@@ -47,6 +63,7 @@ class TorContactInfoParser(object):
                 "valid_chars" : "[a-zA-Z0-9]+"
             }
         },
+        "abuse" : _parse_email_value,
         "keybase" : {
             "fn" : _parse_string_value,
             "args" : {
@@ -71,16 +88,23 @@ class TorContactInfoParser(object):
                 "valid_chars" : "*"
             }
         },
-        "xmpp" : _parse_email_value,
-        "ricochet" : {
+        "matrix" : {
             "fn" : _parse_string_value,
             "args" : {
-                "min_length" : 16,
-                "max_length" : 16,
+                "min_length" : 0,
+                "max_length" : 254,
+                "valid_chars" : "*"
+            }
+        },
+        "xmpp" : _parse_email_value,
+        "otr3" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 40,
+                "max_length" : 40,
                 "valid_chars" : "[a-z0-9]+"
             }
         },
-        "bitmessage" : None,
         "hoster" : {
             "fn" : _parse_string_value,
             "args" : {
@@ -130,22 +154,6 @@ class TorContactInfoParser(object):
                 "valid_chars" : "[a-z-]+"
             }
         },
-        "bitcoin" : {
-            "fn" : _parse_string_value,
-            "args" : {
-                "min_length" : 26,
-                "max_length" : 35,
-                "valid_chars" : "[a-zA-Z0-9]+"
-            }
-        },
-        "zcash" : {
-            "fn" : _parse_string_value,
-            "args" : {
-                "min_length" : 0,
-                "max_length" : 96,
-                "valid_chars" : "[a-ZA-Z0-9]+"
-            }
-        },
         "donationurl" : {
             "fn" : _parse_string_value,
             "args" : {
@@ -154,11 +162,35 @@ class TorContactInfoParser(object):
                 "valid_chars" : "*"
             }
         },
+        "btc" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 26,
+                "max_length" : 99,
+                "valid_chars" : "[a-zA-Z0-9]+"
+            }
+        },
+        "zec" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 0,
+                "max_length" : 95,
+                "valid_chars" : "[a-zA-Z0-9]+"
+            }
+        },
+        "xmr" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 0,
+                "max_length" : 99,
+                "valid_chars" : "[a-zA-Z0-9]+"
+            }
+        },
         "offlinemasterkey" : {
             "fn" : _parse_string_value,
             "args" : {
                 "min_length" : 1,
-                "max_length" : 2,
+                "max_length" : 1,
                 "valid_chars" : "[yn]"
             }
         },
@@ -178,44 +210,19 @@ class TorContactInfoParser(object):
                 "valid_chars" : "[yn]"
             }
         },
-        "scheduler" : {
-            "fn" : _parse_string_value,
-            "args" : {
-                "min_length" : 0,
-                "max_length" : 50,
-                "valid_chars" : "[A-Za-z,]+"
-            }
-        },
         "os" : {
             "fn" : _parse_string_value,
             "args" : {
                 "min_length" : 0,
-                "max_length" : 21,
+                "max_length" : 20,
                 "valid_chars" : "[A-Za-z0-9/.]+"
-            }
-        },
-        "dnslocation" : None,
-        "dnsqname" : {
-            "fn" : _parse_string_value,
-            "args" : {
-                "min_length" : 1,
-                "max_length" : 2,
-                "valid_chars" : "[yn]"
-            }
-        },
-        "dnssec" : {
-            "fn" : _parse_string_value,
-            "args" : {
-                "min_length" : 1,
-                "max_length" : 2,
-                "valid_chars" : "[yn]"
             }
         },
         "tls" : {
             "fn" : _parse_string_value,
             "args" : {
                 "min_length" : 0,
-                "max_length" : 15,
+                "max_length" : 14,
                 "valid_chars" : "[a-z]+"
             }
         },
@@ -223,7 +230,7 @@ class TorContactInfoParser(object):
             "fn" : _parse_string_value,
             "args" : {
                 "min_length" : 1,
-                "max_length" : 2,
+                "max_length" : 1,
                 "valid_chars" : "[yn]"
             }
         },
@@ -231,11 +238,50 @@ class TorContactInfoParser(object):
             "fn" : _parse_string_value,
             "args" : {
                 "min_length" : 1,
-                "max_length" : 2,
+                "max_length" : 1,
                 "valid_chars" : "[yn]"
             }
         },
-        "confmgmt" : None
+        "confmgmt" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 1,
+                "max_length" : 15,
+                "valid_chars" : "[a-zA-Z-]"
+            }
+        },
+        "dnslocation" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 5,
+                "max_length" : 100,
+                "valid_chars" : "[a-z,]"
+            }
+        },
+        "dnsqname" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 1,
+                "max_length" : 1,
+                "valid_chars" : "[yn]"
+            }
+        },
+        "dnssec" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 1,
+                "max_length" : 1,
+                "valid_chars" : "[yn]"
+            }
+        },
+        "dnslocalrootzone" : {
+            "fn" : _parse_string_value,
+            "args" : {
+                "min_length" : 1,
+                "max_length" : 1,
+                "valid_chars" : "[yn]"
+            }
+        }
     }
 
     def __init__(self):
@@ -245,7 +291,7 @@ class TorContactInfoParser(object):
         result = {}
         parts = value.split(" ")
         for p in parts:
-            field_parts = p.split(":")
+            field_parts = p.split(":", 1)
             if len(field_parts) > 1:
                 if field_parts[0] in self._supported_fields_parsers:
                     field_parser = self._supported_fields_parsers[field_parts[0]]
