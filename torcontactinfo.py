@@ -313,7 +313,7 @@ class TorContactInfoParser(object):
                             field_parser["args"]["raise_exception"] = raise_exception_on_invalid_value
 
                             value = field_parser["fn"](self, **field_parser["args"])
-                            result[field_parts[0]] = value
+                        result[field_parts[0]] = value
 
         return result
 
