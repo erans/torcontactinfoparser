@@ -295,6 +295,11 @@ class TorContactInfoParser(object):
         pass
 
     def parse(self, value, raise_exception_on_invalid_value=False):
+        
+        # the ciissversion field is mandatory
+        if not 'ciissversion:' in value:
+            return None
+        
         result = {}
         parts = value.split(" ")
         for p in parts:
