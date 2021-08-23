@@ -37,14 +37,14 @@ pip3 install -U -r requirements.txt
 
 # The easiest way to use the parse command, is simply to pass the contact string as positional arguments. You can specify it as either
 # a single string in the first argument:
-./torcontactinfo.py parse "Privex Inc. email:noc[]privex.io url:https://www.privex.io proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc"
+./torcontactinfo.py parse "Mr. Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
 # Or you can split it across multiple arguments if you need/want to do so:
-./torcontactinfo.py parse Privex Inc. "email:noc[]privex.io url:https://www.privex.io" \
-    "proof:uri-rsa pgp:288DD1632F6E8951" keybase:privexinc twitter:PrivexInc
+./torcontactinfo.py parse "Mr. Example email:me[]example.com url:https://www.example.com \
+     proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
 
 # You can also pipe a contact string into the parse command.
-echo "Privex Inc. email:noc[]privex.io url:https://www.privex.io" \
-     "proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc" | ./torcontactinfo.py parse
+echo "Mr. Example email:me[]example.com url:https://www.example.com \
+     proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example" | ./torcontactinfo.py parse
 
 # The scan command is primarily used by @nusenu for populating the contact details in some of their public services,
 # but you can use it too, if you have a use for it :)
@@ -65,7 +65,7 @@ echo "Privex Inc. email:noc[]privex.io url:https://www.privex.io" \
 # Using 'parse', you can parse an arbitrary ContactInfo string, and it will output the parsed result
 # with pretty printing by default.
 
-./torcontactinfo.py parse "contact Privex Inc. email:me[]example.com url:https://www.example.com " \
+./torcontactinfo.py parse "contact Mr. Example email:me[]example.com url:https://www.example.com " \
         "proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example hoster:www.example.com " \
         "uplinkbw:500 memory:4096 virtualization:kvm btc:bc1qpst9uscvd8rpjjhzz9rau3trylh6e0wh76qrlhw3q9nj89ua728sn3t6a2 " \
         "xmr:89tukP3wfpH4FZAmC1D2GfArWwfPTz8Ap46NZc54Vyhy9YxEUYoFQ7HGQ74LrCMQTD3zxvwM1ewmGjH9WVmeffwR72m1Pps"
