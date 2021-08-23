@@ -1,10 +1,7 @@
 # Tor Contact Info Parser - A tool/Python Class for parsing Tor ContactInfo Information Sharing v2 specification contacts
 
-![Screenshot of Tor Contact Info Parser in action](https://i.imgur.com/hBfppeR.png)
-
 Written by Eran Sandler ([@erans](https://twitter.com/erans)) &copy; 2018
-
-Turned into a proper command-line tool with sub-commands and flags by @Someguy123 at [Privex Inc.](https://www.privex.io) [(github)](https://github.com/PrivexInc) &copy; 2021
+With code contributions by @Someguy123 from Privex Inc.
 
 This is a parser for the
 [Tor ContactInfo Information Sharing Specification](https://nusenu.github.io/ContactInfo-Information-Sharing-Specification/) (version 2).
@@ -12,8 +9,6 @@ This is a parser for the
 The parser can parse the ContactInfo field of Tor relays based on the specification.
 
 Official Repo: <https://github.com/erans/torcontactinfoparser>
-
-Privex Fork: <https://github.com/Privex/torcontactinfoparser>
 
 ## Requirements
 
@@ -65,19 +60,19 @@ echo "Privex Inc. email:noc[]privex.io url:https://www.privex.io" \
 # Using 'parse', you can parse an arbitrary ContactInfo string, and it will output the parsed result
 # with pretty printing by default.
 
-./torcontactinfo.py parse "contact Privex Inc. email:noc[]privex.io url:https://www.privex.io " \
-        "proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc hoster:www.privex.io " \
+./torcontactinfo.py parse "contact Privex Inc. email:me[]example.com url:https://www.example.com " \
+        "proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example hoster:www.example.com " \
         "uplinkbw:500 memory:4096 virtualization:kvm btc:bc1qpst9uscvd8rpjjhzz9rau3trylh6e0wh76qrlhw3q9nj89ua728sn3t6a2 " \
         "xmr:89tukP3wfpH4FZAmC1D2GfArWwfPTz8Ap46NZc54Vyhy9YxEUYoFQ7HGQ74LrCMQTD3zxvwM1ewmGjH9WVmeffwR72m1Pps"
 
     {
-        'email': 'noc@privex.io',
-        'url': 'https://www.privex.io',
+        'email': 'me@example.com',
+        'url': 'https://www.example.com',
         'proof': 'uri-rsa',
         'pgp': None,
-        'keybase': 'privexinc',
-        'twitter': 'PrivexInc',
-        'hoster': 'www.privex.io',
+        'keybase': 'examplecom',
+        'twitter': 'Example',
+        'hoster': 'www.example.com',
         'uplinkbw': '500',
         'memory': '4096',
         'virtualization': 'kvm',
@@ -87,28 +82,28 @@ echo "Privex Inc. email:noc[]privex.io url:https://www.privex.io" \
 
 # You can also pipe a contact string into 'parse', and it will work just the same.
 
-echo "Privex Inc. email:noc[]privex.io url:https://www.privex.io proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc" | ./torcontactinfo.py parse
+echo "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example" | ./torcontactinfo.py parse
 
-    {'email': 'noc@privex.io', 'url': 'https://www.privex.io', 'proof': 'uri-rsa', 'pgp': None, 'keybase': 'privexinc', 'twitter': 'PrivexInc'}
+    {'email': 'me@pexample.com', 'url': 'https://www.example.com', 'proof': 'uri-rsa', 'pgp': None, 'keybase': 'examplecom', 'twitter': 'Example'}
 
 # If you need real JSON outputted, rather than Python dict-style output, you can pass -j to either 'parse' or 'scan'
 
-./torcontactinfo.py parse -j "Privex Inc. email:noc[]privex.io url:https://www.privex.io proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc"
+./torcontactinfo.py parse -j "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
 
     {
-        "email": "noc@privex.io",
-        "url": "https://www.privex.io",
+        "email": "me@example.com",
+        "url": "https://www.example.com",
         "proof": "uri-rsa",
         "pgp": null,
-        "keybase": "privexinc",
-        "twitter": "PrivexInc"
+        "keybase": "examplecom",
+        "twitter": "Example"
     }
 
 # You can use '-np' to disable pretty printing for 'parse' - you can combine it with '-j' to get flat, plain JSON.
 
-./torcontactinfo.py parse -np -j "Privex Inc. email:noc[]privex.io url:https://www.privex.io proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc"
+./torcontactinfo.py parse -np -j "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
 
-    {"email": "noc@privex.io", "url": "https://www.privex.io", "proof": "uri-rsa", "pgp": null, "keybase": "privexinc", "twitter": "PrivexInc"}
+    {"email": "me@example.com", "url": "https://www.example.com", "proof": "uri-rsa", "pgp": null, "keybase": "examplecom", "twitter": "Example"}
 
 ```
 
