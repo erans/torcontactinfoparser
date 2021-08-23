@@ -1,7 +1,7 @@
 # Tor Contact Info Parser - A tool/Python Class for parsing Tor ContactInfo Information Sharing v2 specification contacts
 
-Written by Eran Sandler ([@erans](https://twitter.com/erans)) &copy; 2018
-With code contributions by @Someguy123 from Privex Inc.
+Written by Eran Sandler ([@erans](https://twitter.com/erans)) &copy; 2018 \
+With code contributions by [@Someguy123](https://github.com/someguy123) from Privex Inc.
 
 This is a parser for the
 [Tor ContactInfo Information Sharing Specification](https://nusenu.github.io/ContactInfo-Information-Sharing-Specification/) (version 2).
