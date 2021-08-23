@@ -105,3 +105,5 @@ venv.bak/
 
 .envrc
 .direnv
+Pipfile.lock
+.vscode

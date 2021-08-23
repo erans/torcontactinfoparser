@@ -4,7 +4,7 @@ Tor Contact Info Parser - A tool/Python Class for parsing Tor ContactInfo Inform
 Written by Eran Sandler  (https://twitter.com/erans) (C) 2018
 
 Turned into a proper command-line tool with sub-commands and flags by @Someguy123 at Privex Inc. (C) 2021
-(https://www.privex.io) (https://github.com/PrivexInc) 
+(https://www.privex.io) (https://github.com/PrivexInc)
 
 This is a parser for the Tor ContactInfo Information Sharing Specification v2 (https://nusenu.github.io/ContactInfo-Information-Sharing-Specification/).
 
@@ -348,7 +348,9 @@ class TorContactInfoParser(object):
                     field_parser["args"]["raise_exception"] = raise_exception_on_invalid_value
 
                     value = field_parser["fn"](self, **field_parser["args"])
-                result[name] = value
+
+                if not result.get(name, None):
+                    result[name] = value
 
         return result
 
@@ -370,7 +372,7 @@ def cmd_parse(opts: argparse.Namespace):
     # if not HAS_RICH: res = json.dumps(res, indent=4)
     rprint(res)
 
-    
+
 
 def cmd_scan(opts: argparse.Namespace):
     """
@@ -400,10 +402,10 @@ def main():
         description=textwrap.dedent(f"""
     Examples:
 
-        # 'scan' is the original behaviour of this script. It iterates over the data 
+        # 'scan' is the original behaviour of this script. It iterates over the data
         # from https://onionoo.torproject.org/details , parses each contact, and prints it as Python dict-style JSON.
         {sys.argv[0]} scan
-        
+
         # Same as previous. With no arguments, it's equivalent to running 'scan'.
         {sys.argv[0]}
 
@@ -422,7 +424,7 @@ def main():
                 "proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc hoster:www.privex.io " \\
                 "uplinkbw:500 memory:4096 virtualization:kvm btc:bc1qpst9uscvd8rpjjhzz9rau3trylh6e0wh76qrlhw3q9nj89ua728sn3t6a2 " \\
                 "xmr:89tukP3wfpH4FZAmC1D2GfArWwfPTz8Ap46NZc54Vyhy9YxEUYoFQ7HGQ74LrCMQTD3zxvwM1ewmGjH9WVmeffwR72m1Pps"
-        
+
             {{
                 'email': 'noc@privex.io',
                 'url': 'https://www.privex.io',
@@ -437,7 +439,7 @@ def main():
                 'btc': 'bc1qpst9uscvd8rpjjhzz9rau3trylh6e0wh76qrlhw3q9nj89ua728sn3t6a2',
                 'xmr': '89tukP3wfpH4FZAmC1D2GfArWwfPTz8Ap46NZc54Vyhy9YxEUYoFQ7HGQ74LrCMQTD3zxvwM1ewmGjH9WVmeffwR72m1Pps'
             }}
-        
+
         # You can also pipe a contact string into 'parse', and it will work just the same.
 
         echo "Privex Inc. email:noc[]privex.io url:https://www.privex.io proof:uri-rsa pgp:288DD1632F6E8951 keybase:privexinc twitter:PrivexInc" | {sys.argv[0]} parse

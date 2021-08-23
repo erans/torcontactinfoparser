@@ -20,6 +20,11 @@ Official Repo: <https://github.com/erans/torcontactinfoparser>
     you may want to install the `rich` PyPi package using `pip3` (included in the `requirements.txt`).
   - The `scan` sub-command requires the Python HTTP Requests library `requests` - and can also take advantage of `rich` if installed.
 
+## Running tests
+
+1. Use `pipenv install --dev` to make sure pytest is installed
+2. Run `pytest`
+
 ## Quickstart
 
 ```sh
@@ -110,7 +115,7 @@ echo "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa
 ### Using the `scan` subcommand
 
 ```sh
-# 'scan' is the original behaviour of this script. It iterates over the data 
+# 'scan' is the original behaviour of this script. It iterates over the data
 # from https://onionoo.torproject.org/details , parses each contact, and prints it as Python dict-style JSON.
 ./torcontactinfo.py scan
 
