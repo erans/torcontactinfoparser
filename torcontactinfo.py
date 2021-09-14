@@ -34,6 +34,8 @@ except ImportError:
 from argparse import ArgumentParser
 
 class TorContactInfoParser(object):
+    email_regex = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
+
     def _parse_string_value(self, value, min_length, max_length, valid_chars, raise_exception=False, field_name=None):
         value_length = len(value)
         if value_length < min_length:
@@ -58,9 +60,13 @@ class TorContactInfoParser(object):
 
     def _parse_email_value(self, value):
         if value:
-            return value.replace("[]", "@")
+            v = value.replace("[]", "@")
+            if not re.search(self.email_regex, v):
+                raise ValueError("Invalid email address '{0}'".format(v))
 
-        return value
+            return v
+
+        return None
 
     _supported_fields_parsers = {
         "email" : _parse_email_value,
@@ -331,7 +337,7 @@ class TorContactInfoParser(object):
         # the ciissversion field is mandatory
         if not 'ciissversion:' in value:
             return None
-        
+
         result = {}
         parts = value.split(" ")
         for p in parts:
