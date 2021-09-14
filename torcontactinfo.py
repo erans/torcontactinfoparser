@@ -61,10 +61,8 @@ class TorContactInfoParser(object):
     def _parse_email_value(self, value):
         if value:
             v = value.replace("[]", "@")
-            if not re.search(self.email_regex, v):
-                raise ValueError("Invalid email address '{0}'".format(v))
-
-            return v
+            if re.search(self.email_regex, v):
+                return v
 
         return None
 

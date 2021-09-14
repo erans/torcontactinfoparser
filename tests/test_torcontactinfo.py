@@ -23,9 +23,8 @@ def test_email_address_validation():
 
     # Invalid email
     value = "ciissversion:2 email:111"
-    with pytest.raises(ValueError) as e:
-        result = parser.parse(value)
-        assert result["email"] is None
+    result = parser.parse(value)
+    assert result["email"] is None
 
     # Invalid email
     value = "ciissversion:2 email:someone[]somewhere.co.uk"
