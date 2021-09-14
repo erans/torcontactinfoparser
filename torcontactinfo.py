@@ -166,8 +166,8 @@ class TorContactInfoParser(object):
             "fn" : _parse_string_value,
             "args" : {
                 "min_length" : 0,
-                "max_length" : 7,
-                "valid_chars" : "[unmetered0-9]+"
+                "max_length" : 9,
+                "valid_chars" : "[unmetrd0-9]+"
             }
         },
         "memory" : {
