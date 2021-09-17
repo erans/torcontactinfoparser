@@ -16,10 +16,14 @@ def test_torcontact_info_multiple_same_named_fields():
 def test_email_address_validation():
     parser = TorContactInfoParser()
 
-    # Valud email
+    # Valid email
     value = "ciissversion:2 email:test[]example.com"
     result = parser.parse(value)
     assert result["email"] == "test@example.com"
+
+    # Valid email, check deobfuscation
+    result = parser.parse(value, deobfuscate_email=False)
+    assert result["email"] == "test[]example.com"
 
     # Invalid email
     value = "ciissversion:2 email:111"

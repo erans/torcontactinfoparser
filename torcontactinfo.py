@@ -36,7 +36,7 @@ from argparse import ArgumentParser
 class TorContactInfoParser(object):
     email_regex = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
 
-    def _parse_string_value(self, value, min_length, max_length, valid_chars, raise_exception=False, field_name=None):
+    def _parse_string_value(self, value, min_length, max_length, valid_chars, raise_exception=False, field_name=None, deobfuscate_email=False):
         value_length = len(value)
         if value_length < min_length:
             if raise_exception:
@@ -58,16 +58,22 @@ class TorContactInfoParser(object):
 
         return value
 
-    def _parse_email_value(self, value):
+    def _parse_email_value(self, value, field_name, raise_exception, deobfuscate_email):
         if value:
             v = value.replace("[]", "@")
             if re.search(self.email_regex, v):
+                if not deobfuscate_email:
+                    return v.replace("@", "[]")
+
                 return v
 
         return None
 
     _supported_fields_parsers = {
-        "email" : _parse_email_value,
+        "email" : {
+            "fn": _parse_email_value,
+            "args": {}
+        },
         "url" : {
             "fn" : _parse_string_value,
             "args" : {
@@ -100,7 +106,10 @@ class TorContactInfoParser(object):
                 "valid_chars" : "[a-zA-Z0-9]+"
             }
         },
-        "abuse" : _parse_email_value,
+        "abuse" : {
+            "fn": _parse_email_value,
+            "args": {}
+        },
         "keybase" : {
             "fn" : _parse_string_value,
             "args" : {
@@ -133,7 +142,10 @@ class TorContactInfoParser(object):
                 "valid_chars" : "*"
             }
         },
-        "xmpp" : _parse_email_value,
+        "xmpp" : {
+            "fn": _parse_email_value,
+            "args": {}
+        },
         "otr3" : {
             "fn" : _parse_string_value,
             "args" : {
@@ -331,7 +343,7 @@ class TorContactInfoParser(object):
     def __init__(self):
         pass
 
-    def parse(self, value: str, raise_exception_on_invalid_value=False) -> dict:
+    def parse(self, value: str, raise_exception_on_invalid_value=False, deobfuscate_email=True) -> dict:
         # the ciissversion field is mandatory
         if not 'ciissversion:' in value:
             return None
@@ -354,6 +366,7 @@ class TorContactInfoParser(object):
                     field_parser["args"]["field_name"] = name
                     field_parser["args"]["value"] = data
                     field_parser["args"]["raise_exception"] = raise_exception_on_invalid_value
+                    field_parser["args"]["deobfuscate_email"] = deobfuscate_email
 
                     value = field_parser["fn"](self, **field_parser["args"])
 
