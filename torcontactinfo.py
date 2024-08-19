@@ -87,7 +87,7 @@ class TorContactInfoParser(object):
             "args" : {
                 "min_length" : 7,
                 "max_length" : 7,
-                "valid_chars" : "[adinrsu-]+"
+                "valid_chars" : "[adinrsu\-]+"
             }
         },
         "ciissversion" : {
