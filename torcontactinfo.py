@@ -49,7 +49,7 @@ class TorContactInfoParser(object):
             return None
 
         if valid_chars != "*":
-            m = re.search(valid_chars, value)
+            m = re.fullmatch(valid_chars, value)
             if not m:
                 if raise_exception:
                     raise ValueError("value of field '{0}' doesn't match valid chars restrictions".format(field_name))
