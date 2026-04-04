@@ -6,7 +6,7 @@ Written by Eran Sandler  (https://twitter.com/erans) (C) 2018
 Turned into a proper command-line tool with sub-commands and flags by @Someguy123 at Privex Inc. (C) 2021
 (https://www.privex.io) (https://github.com/PrivexInc)
 
-This is a parser for the Tor ContactInfo Information Sharing Specification v2 (https://nusenu.github.io/ContactInfo-Information-Sharing-Specification/).
+This is a parser for the Tor ContactInfo Information Sharing Specification v3 (https://nusenu.github.io/ContactInfo-Information-Sharing-Specification/).
 
 The parser can parse the ContactInfo field of Tor relays based on the specification.
 
@@ -95,7 +95,7 @@ class TorContactInfoParser(object):
             "args" : {
                 "min_length" : 1,
                 "max_length" : 1,
-                "valid_chars" : "[12]+"
+                "valid_chars" : "[123]+"
             }
         },
         "pgp" : {
