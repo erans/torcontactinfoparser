@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tor Contact Info Parser - A tool/Python Class for parsing Tor ContactInfo Information Sharing v2 specification contacts
+Tor Contact Info Parser - A tool/Python Class for parsing Tor ContactInfo Information Sharing v3 specification contacts
 Written by Eran Sandler  (https://twitter.com/erans) (C) 2018
 
 Turned into a proper command-line tool with sub-commands and flags by @Someguy123 at Privex Inc. (C) 2021
