@@ -8,4 +8,4 @@ requests = "==2.33.0"
 rich = "==10.7.0"
 
 [dev-packages]
-pytest = "==6.2.4"
+pytest = "==9.0.3"
