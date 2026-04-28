@@ -1,10 +1,10 @@
-# Tor Contact Info Parser - A tool/Python Class for parsing Tor ContactInfo Information Sharing v2 specification contacts
+# Tor Contact Info Parser - A tool/Python Class for parsing Tor ContactInfo Information Sharing v3 specification contacts
 
 Written by Eran Sandler ([@erans](https://twitter.com/erans)) &copy; 2018 \
 With code contributions by [@Someguy123](https://github.com/someguy123) from Privex Inc.
 
 This is a parser for the
-[Tor ContactInfo Information Sharing Specification](https://nusenu.github.io/ContactInfo-Information-Sharing-Specification/) (version 2).
+[Tor ContactInfo Information Sharing Specification](https://nusenu.github.io/ContactInfo-Information-Sharing-Specification/) (version 3).
 
 The parser can parse the ContactInfo field of Tor relays based on the specification.
 
@@ -37,14 +37,14 @@ pip3 install -U -r requirements.txt
 
 # The easiest way to use the parse command, is simply to pass the contact string as positional arguments. You can specify it as either
 # a single string in the first argument:
-./torcontactinfo.py parse "Mr. Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
+./torcontactinfo.py parse "Mr. Example email:me[]example.com url:https://www.example.com proof:dns-familyid-ed25519 pgp:288DD1632F6E8951 keybase:examplecom twitter:Example ciissversion:3"
 # Or you can split it across multiple arguments if you need/want to do so:
 ./torcontactinfo.py parse "Mr. Example email:me[]example.com url:https://www.example.com \
-     proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
+     proof:dns-familyid-ed25519 pgp:288DD1632F6E8951 keybase:examplecom twitter:Example ciissversion:3"
 
 # You can also pipe a contact string into the parse command.
 echo "Mr. Example email:me[]example.com url:https://www.example.com \
-     proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example" | ./torcontactinfo.py parse
+     proof:dns-familyid-ed25519 pgp:288DD1632F6E8951 keybase:examplecom twitter:Example ciissversion:3" | ./torcontactinfo.py parse
 
 # The scan command is primarily used by @nusenu for populating the contact details in some of their public services,
 # but you can use it too, if you have a use for it :)
@@ -66,14 +66,14 @@ echo "Mr. Example email:me[]example.com url:https://www.example.com \
 # with pretty printing by default.
 
 ./torcontactinfo.py parse "contact Mr. Example email:me[]example.com url:https://www.example.com " \
-        "proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example hoster:www.example.com " \
+        "proof:dns-familyid-ed25519 pgp:288DD1632F6E8951 keybase:examplecom twitter:Example hoster:www.example.com " \
         "uplinkbw:500 memory:4096 virtualization:kvm btc:bc1qpst9uscvd8rpjjhzz9rau3trylh6e0wh76qrlhw3q9nj89ua728sn3t6a2 " \
         "xmr:89tukP3wfpH4FZAmC1D2GfArWwfPTz8Ap46NZc54Vyhy9YxEUYoFQ7HGQ74LrCMQTD3zxvwM1ewmGjH9WVmeffwR72m1Pps"
 
     {
         'email': 'me@example.com',
         'url': 'https://www.example.com',
-        'proof': 'uri-rsa',
+        'proof': 'dns-familyid-ed25519',
         'pgp': None,
         'keybase': 'examplecom',
         'twitter': 'Example',
@@ -87,18 +87,18 @@ echo "Mr. Example email:me[]example.com url:https://www.example.com \
 
 # You can also pipe a contact string into 'parse', and it will work just the same.
 
-echo "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example" | ./torcontactinfo.py parse
+echo "Mr Example email:me[]example.com url:https://www.example.com proof:dns-familyid-ed25519 pgp:288DD1632F6E8951 keybase:examplecom twitter:Example" | ./torcontactinfo.py parse
 
-    {'email': 'me@pexample.com', 'url': 'https://www.example.com', 'proof': 'uri-rsa', 'pgp': None, 'keybase': 'examplecom', 'twitter': 'Example'}
+    {'email': 'me@pexample.com', 'url': 'https://www.example.com', 'proof': 'dns-familyid-ed25519', 'pgp': None, 'keybase': 'examplecom', 'twitter': 'Example'}
 
 # If you need real JSON outputted, rather than Python dict-style output, you can pass -j to either 'parse' or 'scan'
 
-./torcontactinfo.py parse -j "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
+./torcontactinfo.py parse -j "Mr Example email:me[]example.com url:https://www.example.com proof:dns-familyid-ed25519 pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
 
     {
         "email": "me@example.com",
         "url": "https://www.example.com",
-        "proof": "uri-rsa",
+        "proof": "dns-familyid-ed25519",
         "pgp": null,
         "keybase": "examplecom",
         "twitter": "Example"
@@ -106,9 +106,9 @@ echo "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa
 
 # You can use '-np' to disable pretty printing for 'parse' - you can combine it with '-j' to get flat, plain JSON.
 
-./torcontactinfo.py parse -np -j "Mr Example email:me[]example.com url:https://www.example.com proof:uri-rsa pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
+./torcontactinfo.py parse -np -j "Mr Example email:me[]example.com url:https://www.example.com proof:dns-familyid-ed25519 pgp:288DD1632F6E8951 keybase:examplecom twitter:Example"
 
-    {"email": "me@example.com", "url": "https://www.example.com", "proof": "uri-rsa", "pgp": null, "keybase": "examplecom", "twitter": "Example"}
+    {"email": "me@example.com", "url": "https://www.example.com", "proof": "dns-familyid-ed25519", "pgp": null, "keybase": "examplecom", "twitter": "Example"}
 
 ```
 
